@@ -1,0 +1,426 @@
+---
+
+---
+
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1
+            class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
+        >
+            Random UUID Generator
+        </h1>
+        <p class="text-base-content/70">
+            Generate version-4 UUIDs instantly. Free, fast, and secure.
+        </p>
+    </div>
+
+    <!-- Single UUID Generator Card -->
+    <div class="card bg-base-100 shadow-xl mb-8 border border-base-300">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-6">Single UUID</h2>
+
+            <div
+                class="flex flex-col md:flex-row gap-4 items-center justify-between p-6 bg-base-200 rounded-box mb-6"
+            >
+                <code
+                    id="singleUuid"
+                    class="text-xl md:text-2xl font-mono break-all text-primary font-bold"
+                >
+                    Click generate to start
+                </code>
+                <div class="flex gap-2 shrink-0">
+                    <button
+                        id="copySingleBtn"
+                        class="btn btn-square btn-ghost"
+                        aria-label="Copy UUID"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button
+                        id="regenerateBtn"
+                        class="btn btn-square btn-ghost"
+                        aria-label="Regenerate UUID"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="flex flex-col sm:flex-row justify-between items-center gap-4"
+            >
+                <div class="form-control">
+                    <label class="label cursor-pointer gap-2">
+                        <input
+                            type="checkbox"
+                            id="includeHyphens"
+                            class="toggle toggle-primary"
+                            checked
+                        />
+                        <span class="label-text">Include Hyphens</span>
+                    </label>
+                </div>
+                <button
+                    id="generateBtn"
+                    class="btn btn-primary w-full sm:w-auto min-w-[200px]"
+                >
+                    Generate UUID
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk UUID Generator Card -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="card-title text-2xl">Bulk Generation</h2>
+                <span class="badge badge-secondary">Batch Mode</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Quantity (1-100)</span>
+                    </label>
+                    <input
+                        type="number"
+                        id="bulkCount"
+                        class="input input-bordered"
+                        value="10"
+                        min="1"
+                        max="100"
+                    />
+                </div>
+                <div class="form-control justify-end">
+                    <label class="label cursor-pointer gap-2">
+                        <input
+                            type="checkbox"
+                            id="bulkIncludeHyphens"
+                            class="toggle toggle-secondary"
+                            checked
+                        />
+                        <span class="label-text">Include Hyphens</span>
+                    </label>
+                </div>
+                <div class="form-control justify-end">
+                    <button
+                        id="generateBulkBtn"
+                        class="btn btn-secondary w-full"
+                    >
+                        Generate Bulk
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div
+                    id="bulkOutput"
+                    class="textarea textarea-bordered h-64 w-full font-mono text-sm leading-relaxed overflow-y-auto bg-base-200 p-4 rounded-box empty:before:content-['Generated_UUIDs_will_appear_here...'] empty:before:text-base-content/50 empty:before:italic"
+                >
+                </div>
+                <div class="absolute top-2 right-2 flex gap-2">
+                    <button
+                        id="copyBulkBtn"
+                        class="btn btn-xs btn-ghost tooltip tooltip-left"
+                        data-tip="Copy All"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button
+                        id="downloadBulkBtn"
+                        class="btn btn-xs btn-ghost tooltip tooltip-left"
+                        data-tip="Download .txt"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="text-xs text-base-content/50 mt-2 text-right"
+                id="uuidCounter"
+            >
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Theme Controller (Fixed Bottom Right) -->
+    <div class="toast toast-end">
+        <label class="swap swap-rotate btn btn-circle btn-primary shadow-lg">
+            <!-- this hidden checkbox controls the state -->
+            <input type="checkbox" class="theme-controller" value="dark" />
+
+            <!-- sun icon -->
+            <svg
+                class="swap-off h-7 w-7 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.71.71l.71-.71a1,1,0,0,0,0-1.41,1,1,0,0,0-1.41,0l-.71.71A1,1,0,0,0,5.64,7.05Zm13.01,7.38a1,1,0,0,0,.71.71l.71-.71a1,1,0,0,0,0-1.41,1,1,0,0,0-1.41,0l-.71.71A1,1,0,0,0,18.65,14.43Zm-7,7a1,1,0,0,0,1-1V20a1,1,0,0,0-2,0v1A1,1,0,0,0,12,21.43Zm7-14.43-.71-.71a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.41l.71.71a1,1,0,0,0,1.41,0A1,1,0,0,0,19.35,7ZM20.35,11a1,1,0,0,0-1,1h1a1,1,0,0,0,0-2h-1A1,1,0,0,0,20.35,11ZM12,6A6,6,0,1,0,18,12,6.01,6.01,0,0,0,12,6Z"
+                ></path>
+            </svg>
+
+            <!-- moon icon -->
+            <svg
+                class="swap-on h-7 w-7 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Z"
+                ></path>
+            </svg>
+        </label>
+    </div>
+
+    <!-- Toast Notification -->
+    <div
+        id="toast"
+        class="toast toast-bottom toast-center transition-opacity duration-300 opacity-0 pointer-events-none"
+    >
+        <div class="alert alert-info">
+            <span id="toastMessage">Message sent successfully.</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Setup theme toggle logic to sync with local storage
+    const themeController = document.querySelector(
+        ".theme-controller",
+    ) as HTMLInputElement;
+
+    // Set initial state based on localStorage
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme === "dark") {
+        themeController.checked = true;
+    }
+
+    themeController.addEventListener("change", (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        if (target.checked) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+        }
+    });
+
+    // Logic from uuid-generator.js adapted for Astro/DaisyUI
+
+    function generateUUID(includeHyphens = true) {
+        const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+            /[xy]/g,
+            function (c) {
+                const r = (Math.random() * 16) | 0;
+                const v = c === "x" ? r : (r & 0x3) | 0x8;
+                return v.toString(16);
+            },
+        );
+        return includeHyphens ? uuid : uuid.replace(/-/g, "");
+    }
+
+    // DOM Elements
+    const singleUuidEl = document.getElementById("singleUuid");
+    const generateBtn = document.getElementById("generateBtn");
+    const regenerateBtn = document.getElementById("regenerateBtn");
+    const copySingleBtn = document.getElementById("copySingleBtn");
+    const includeHyphensCheckbox = document.getElementById(
+        "includeHyphens",
+    ) as HTMLInputElement;
+
+    const bulkCountInput = document.getElementById(
+        "bulkCount",
+    ) as HTMLInputElement;
+    const bulkIncludeHyphensCheckbox = document.getElementById(
+        "bulkIncludeHyphens",
+    ) as HTMLInputElement;
+    const generateBulkBtn = document.getElementById("generateBulkBtn");
+    const bulkOutput = document.getElementById("bulkOutput");
+    const copyBulkBtn = document.getElementById("copyBulkBtn");
+    const downloadBulkBtn = document.getElementById("downloadBulkBtn");
+    const uuidCounter = document.getElementById("uuidCounter");
+
+    let bulkUuids: string[] = [];
+
+    // Single UUID Logic
+    function updateSingleUUID() {
+        if (!singleUuidEl || !includeHyphensCheckbox) return;
+        singleUuidEl.classList.add("opacity-50");
+        setTimeout(() => {
+            singleUuidEl.textContent = generateUUID(
+                includeHyphensCheckbox.checked,
+            );
+            singleUuidEl.classList.remove("opacity-50");
+        }, 150);
+    }
+
+    generateBtn?.addEventListener("click", updateSingleUUID);
+    regenerateBtn?.addEventListener("click", updateSingleUUID);
+
+    copySingleBtn?.addEventListener("click", () => {
+        const text = singleUuidEl?.textContent?.trim();
+        if (text && text !== "Click generate to start") {
+            copyToClipboard(text);
+            showToast("UUID copied to clipboard!");
+        } else {
+            updateSingleUUID(); // Auto generate if empty/fresh
+            setTimeout(() => {
+                const newText = singleUuidEl?.textContent?.trim();
+                if (newText) {
+                    copyToClipboard(newText);
+                    showToast("Generated & Copied!");
+                }
+            }, 200);
+        }
+    });
+
+    // Bulk UUID Logic
+    function generateBulk() {
+        if (
+            !bulkCountInput ||
+            !bulkIncludeHyphensCheckbox ||
+            !bulkOutput ||
+            !uuidCounter
+        )
+            return;
+
+        let count = Math.min(
+            Math.max(parseInt(bulkCountInput.value) || 10, 1),
+            100,
+        );
+        bulkCountInput.value = count.toString();
+
+        bulkUuids = [];
+        for (let i = 0; i < count; i++) {
+            bulkUuids.push(generateUUID(bulkIncludeHyphensCheckbox.checked));
+        }
+
+        bulkOutput.innerHTML = bulkUuids.join("<br>");
+        uuidCounter.textContent = `Generated ${bulkUuids.length} UUID${bulkUuids.length > 1 ? "s" : ""}`;
+    }
+
+    generateBulkBtn?.addEventListener("click", generateBulk);
+
+    copyBulkBtn?.addEventListener("click", () => {
+        if (bulkUuids.length > 0) {
+            copyToClipboard(bulkUuids.join("\n"));
+            showToast(`${bulkUuids.length} UUIDs copied to clipboard!`);
+        } else {
+            showToast("Generate UUIDs first!");
+        }
+    });
+
+    downloadBulkBtn?.addEventListener("click", () => {
+        if (bulkUuids.length > 0) {
+            const blob = new Blob([bulkUuids.join("\n")], {
+                type: "text/plain",
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `uuids-${new Date().toISOString().slice(0, 10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("UUIDs downloaded!");
+        } else {
+            showToast("Generate UUIDs first!");
+        }
+    });
+
+    // Utilities
+    function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text);
+        } else {
+            // Fallback
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        }
+    }
+
+    function showToast(message: string) {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+        if (toast && toastMessage) {
+            toastMessage.textContent = message;
+            toast.classList.remove("opacity-0");
+            setTimeout(() => toast.classList.add("opacity-0"), 2500);
+        }
+    }
+
+    // Initial load
+    updateSingleUUID();
+
+    // Validation for bulk input
+    bulkCountInput?.addEventListener(
+        "input",
+        function (this: HTMLInputElement) {
+            let value = parseInt(this.value);
+            if (value > 100) this.value = "100";
+            if (value < 1 && this.value !== "") this.value = "1";
+        },
+    );
+</script>
