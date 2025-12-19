@@ -15,5 +15,7 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  site: 'https://bensooraj.github.io',
+  base: '/randomidgenerator',
 });
