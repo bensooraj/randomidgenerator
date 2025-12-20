@@ -18,4 +18,5 @@ export default defineConfig({
   },
   site: 'https://randgen.space',
   // base: '/randomidgenerator',
+  trailingSlash: "never",
 });
