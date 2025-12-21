@@ -1,0 +1,414 @@
+---
+
+---
+
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1
+            class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-primary to-secondary"
+        >
+            Random ULID Generator
+        </h1>
+        <p class="text-base-content/70">
+            Generate Universally Unique Lexicographically Sortable Identifiers.
+        </p>
+    </div>
+
+    <!-- Configuration Card -->
+    <div class="card bg-base-100 shadow-xl mb-8 border border-base-300">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-4">Configuration</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="form-control">
+                    <label class="label" for="ulidTimestamp">
+                        <span class="label-text">Seed Timestamp (ms)</span>
+                        <button
+                            id="setNowBtn"
+                            class="btn btn-xs btn-ghost text-primary"
+                        >
+                            Set to Now
+                        </button>
+                    </label>
+                    <input
+                        type="number"
+                        id="ulidTimestamp"
+                        class="input input-bordered w-full"
+                        placeholder="Leave empty for current time"
+                    />
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer justify-start gap-4">
+                        <span class="label-text text-base font-medium"
+                            >Monotonic Generation</span
+                        >
+                        <input
+                            type="checkbox"
+                            id="ulidMonotonic"
+                            class="toggle toggle-primary"
+                        />
+                    </label>
+                    <div class="text-xs text-base-content/60 mt-2">
+                        Ensures strict ordering for the same timestamp by
+                        incrementing the random component.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Single ULID Generator Card -->
+    <div class="card bg-base-100 shadow-xl mb-8 border border-base-300">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-6">Single ULID</h2>
+
+            <div
+                class="flex flex-col md:flex-row gap-4 items-center justify-between p-6 bg-base-200 rounded-box mb-6"
+            >
+                <code
+                    id="singleUlid"
+                    class="text-xl md:text-2xl font-mono break-all text-primary font-bold"
+                >
+                    Click generate to start
+                </code>
+                <div class="flex gap-2 shrink-0">
+                    <button
+                        id="copySingleBtn"
+                        class="btn btn-square btn-ghost"
+                        aria-label="Copy ULID"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button
+                        id="regenerateBtn"
+                        class="btn btn-square btn-ghost"
+                        aria-label="Regenerate ULID"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button
+                    id="generateBtn"
+                    class="btn btn-primary w-full sm:w-auto min-w-[200px]"
+                >
+                    Generate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk ULID Generator Card -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="card-title text-2xl">Bulk Generation</h2>
+                <span class="badge badge-secondary">Batch Mode</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 mb-6 gap-4">
+                <div class="form-control">
+                    <input
+                        type="number"
+                        id="bulkCount"
+                        class="input input-bordered"
+                        value="10"
+                        min="1"
+                        max="100"
+                    />
+                    <label class="label" for="bulkCount">
+                        <span class="label-text">Quantity (1-100)</span>
+                    </label>
+                </div>
+                <div class="form-control justify-end">
+                    <button
+                        id="generateBulkBtn"
+                        class="btn btn-primary w-full min-w-[200px]"
+                    >
+                        Generate
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div
+                    id="bulkOutput"
+                    class="textarea textarea-bordered h-64 w-full font-mono text-sm leading-relaxed overflow-y-auto bg-base-200 p-4 rounded-box empty:before:content-['Generated_ULIDs_will_appear_here...'] empty:before:text-base-content/50 empty:before:italic"
+                >
+                </div>
+                <div class="absolute top-2 right-2 flex gap-2">
+                    <button
+                        id="copyBulkBtn"
+                        class="btn btn-xs btn-ghost tooltip tooltip-left"
+                        data-tip="Copy All"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button
+                        id="downloadBulkBtn"
+                        class="btn btn-xs btn-ghost tooltip tooltip-left"
+                        data-tip="Download .txt"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="text-xs text-base-content/50 mt-2 text-right"
+                id="ulidCounter"
+            >
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div
+        id="toast"
+        class="toast toast-bottom toast-center transition-opacity duration-300 opacity-0 pointer-events-none"
+    >
+        <div class="alert alert-info">
+            <span id="toastMessage">Message sent successfully.</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { ulid, monotonicFactory } from "ulid";
+
+    // DOM Elements
+    const singleUlidEl = document.getElementById("singleUlid");
+    const generateBtn = document.getElementById("generateBtn");
+    const regenerateBtn = document.getElementById("regenerateBtn");
+    const copySingleBtn = document.getElementById("copySingleBtn");
+
+    // Config Elements
+    const ulidTimestampInput = document.getElementById(
+        "ulidTimestamp",
+    ) as HTMLInputElement;
+    const setNowBtn = document.getElementById("setNowBtn");
+    const ulidMonotonicCheckbox = document.getElementById(
+        "ulidMonotonic",
+    ) as HTMLInputElement;
+
+    const bulkCountInput = document.getElementById(
+        "bulkCount",
+    ) as HTMLInputElement;
+    const generateBulkBtn = document.getElementById("generateBulkBtn");
+    const bulkOutput = document.getElementById("bulkOutput");
+    const copyBulkBtn = document.getElementById("copyBulkBtn");
+    const downloadBulkBtn = document.getElementById("downloadBulkBtn");
+    const ulidCounter = document.getElementById("ulidCounter");
+
+    let bulkUlids: string[] = [];
+    // Initialize monotonic factory
+    const factory = monotonicFactory();
+
+    function getUlid(useMonotonic: boolean, timestamp?: number) {
+        // If timestamp is provided, use it. Otherwise undefined (defaults to Date.now() in ulid/factory)
+        // However, ulid() accepts seedTime.
+        // monotonicFactory() returns a function that accepts seedTime.
+
+        const ts = timestamp && !isNaN(timestamp) ? timestamp : Date.now();
+
+        if (useMonotonic) {
+            return factory(ts);
+        } else {
+            return ulid(ts);
+        }
+    }
+
+    // Single ULID Logic
+    function updateSingleULID() {
+        if (!singleUlidEl) return;
+
+        const isMonotonic = ulidMonotonicCheckbox?.checked || false;
+        const timestampVal = parseInt(ulidTimestampInput?.value);
+
+        singleUlidEl.classList.add("opacity-50");
+        setTimeout(() => {
+            singleUlidEl.textContent = getUlid(isMonotonic, timestampVal);
+            singleUlidEl.classList.remove("opacity-50");
+        }, 150);
+    }
+
+    setNowBtn?.addEventListener("click", () => {
+        if (ulidTimestampInput) {
+            ulidTimestampInput.value = Date.now().toString();
+        }
+    });
+
+    generateBtn?.addEventListener("click", updateSingleULID);
+    regenerateBtn?.addEventListener("click", updateSingleULID);
+
+    copySingleBtn?.addEventListener("click", () => {
+        const text = singleUlidEl?.textContent?.trim();
+        if (text && text !== "Click generate to start") {
+            copyToClipboard(text);
+            showToast("ULID copied to clipboard!");
+        } else {
+            updateSingleULID();
+            setTimeout(() => {
+                const newText = singleUlidEl?.textContent?.trim();
+                if (newText) {
+                    copyToClipboard(newText);
+                    showToast("Generated & Copied!");
+                }
+            }, 200);
+        }
+    });
+
+    // Bulk ULID Logic
+    function generateBulk() {
+        if (!bulkCountInput || !bulkOutput || !ulidCounter) return;
+
+        let count = Math.min(
+            Math.max(parseInt(bulkCountInput.value) || 10, 1),
+            100,
+        );
+        bulkCountInput.value = count.toString();
+
+        const isMonotonic = ulidMonotonicCheckbox?.checked || false;
+        // If user set a specific timestamp, we probably want to use it for ALL bulk items?
+        // If they left it blank, do we use one Date.now() for all, or allow it to progress?
+        // Typically bulk generation happens instantly, so Date.now() would be the same.
+        // If monotonic is ON, it handles the same timestamp gracefully.
+        // If monotonic is OFF, random collision handling applies (standard ulid).
+
+        let timestampVal = parseInt(ulidTimestampInput?.value);
+        if (isNaN(timestampVal)) {
+            timestampVal = Date.now();
+        }
+
+        bulkUlids = [];
+        for (let i = 0; i < count; i++) {
+            bulkUlids.push(getUlid(isMonotonic, timestampVal));
+        }
+
+        bulkOutput.innerHTML = bulkUlids.join("<br>");
+        ulidCounter.textContent = `Generated ${bulkUlids.length} ULID${bulkUlids.length > 1 ? "s" : ""}`;
+    }
+
+    generateBulkBtn?.addEventListener("click", generateBulk);
+
+    copyBulkBtn?.addEventListener("click", () => {
+        if (bulkUlids.length > 0) {
+            copyToClipboard(bulkUlids.join("\n"));
+            showToast(`${bulkUlids.length} ULIDs copied to clipboard!`);
+        } else {
+            showToast("Generate ULIDs first!");
+        }
+    });
+
+    downloadBulkBtn?.addEventListener("click", () => {
+        if (bulkUlids.length > 0) {
+            const blob = new Blob([bulkUlids.join("\n")], {
+                type: "text/plain",
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `ulids-${new Date().toISOString().slice(0, 10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("ULIDs downloaded!");
+        } else {
+            showToast("Generate ULIDs first!");
+        }
+    });
+
+    // Utilities
+    function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        }
+    }
+
+    function showToast(message: string) {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+        if (toast && toastMessage) {
+            toastMessage.textContent = message;
+            toast.classList.remove("opacity-0");
+            setTimeout(() => toast.classList.add("opacity-0"), 2500);
+        }
+    }
+
+    // Validation for inputs
+    bulkCountInput?.addEventListener(
+        "input",
+        function (this: HTMLInputElement) {
+            let value = parseInt(this.value);
+            if (value > 100) this.value = "100";
+            if (value < 1 && this.value !== "") this.value = "1";
+        },
+    );
+
+    // Initial load
+    updateSingleULID();
+</script>
