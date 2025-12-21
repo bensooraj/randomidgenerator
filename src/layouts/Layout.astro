@@ -90,7 +90,7 @@ const DARK_THEME = "dark";
 	</body>
 </html>
 
-<script is:inline>
+<script is:inline define:vars={{ DEFAULT_THEME, DARK_THEME }}>
 	// ☝️ This script prevents the FART effect.
 	const theme = localStorage.getItem("theme");
 	if (theme === null) {
@@ -111,6 +111,8 @@ const DARK_THEME = "dark";
 
 		if (currentTheme === DARK_THEME) {
 			themeController.checked = true;
+		} else {
+			themeController.checked = false;
 		}
 
 		themeController.addEventListener("change", (e) => {
