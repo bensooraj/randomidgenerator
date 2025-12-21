@@ -1,11 +1,150 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+	title="Random ID Generators | Free Developer Tools"
+	description="Generate UUIDs, CUIDs, NanoIDs, ULIDs, and secure passwords instantly. Free, fast, and secure developer tools."
+>
+	<main class="min-h-screen bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto text-center">
+			<h1
+				class="text-5xl font-extrabold text-base-content tracking-tight sm:text-6xl mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+			>
+				Random ID Generators
+			</h1>
+			<p class="mt-4 max-w-2xl mx-auto text-xl text-base-content/80">
+				A collection of secure, improved, and modern identifier
+				generators for your applications.
+			</p>
+		</div>
+
+		<div
+			class="mt-16 max-w-5xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+		>
+			{/* UUID Card */}
+			<a
+				href="/uuid"
+				class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-base-300 group"
+			>
+				<div class="card-body">
+					<h2
+						class="card-title text-2xl text-primary group-hover:text-primary-focus transition-colors"
+					>
+						<span class="text-3xl mr-2">🆔</span> UUID
+					</h2>
+					<p class="text-base-content/70">
+						Universally Unique Identifier. The standard 128-bit
+						label for information in computer systems.
+					</p>
+					<div class="card-actions justify-end mt-4">
+						<span
+							class="btn btn-primary btn-sm btn-outline group-hover:btn-active"
+							>Generate UUID &rarr;</span
+						>
+					</div>
+				</div>
+			</a>
+
+			{/* CUID Card */}
+			<a
+				href="/cuid"
+				class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-base-300 group"
+			>
+				<div class="card-body">
+					<h2
+						class="card-title text-2xl text-secondary group-hover:text-secondary-focus transition-colors"
+					>
+						<span class="text-3xl mr-2">🛡️</span> CUID
+					</h2>
+					<p class="text-base-content/70">
+						Collision-resistant ids. Optimized for horizontal
+						scaling and performance.
+					</p>
+					<div class="card-actions justify-end mt-4">
+						<span
+							class="btn btn-secondary btn-sm btn-outline group-hover:btn-active"
+							>Generate CUID &rarr;</span
+						>
+					</div>
+				</div>
+			</a>
+
+			{/* Nano ID Card */}
+			<a
+				href="/nanoid"
+				class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-base-300 group"
+			>
+				<div class="card-body">
+					<h2
+						class="card-title text-2xl text-accent group-hover:text-accent-focus transition-colors"
+					>
+						<span class="text-3xl mr-2">⚡</span> Nano ID
+					</h2>
+					<p class="text-base-content/70">
+						A tiny, secure, URL-friendly, unique string ID generator
+						for JavaScript.
+					</p>
+					<div class="card-actions justify-end mt-4">
+						<span
+							class="btn btn-accent btn-sm btn-outline group-hover:btn-active"
+							>Generate Nano ID &rarr;</span
+						>
+					</div>
+				</div>
+			</a>
+
+			{/* ULID Card */}
+			<a
+				href="/ulid"
+				class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-base-300 group"
+			>
+				<div class="card-body">
+					<h2
+						class="card-title text-2xl text-info group-hover:text-info-content transition-colors"
+					>
+						<span class="text-3xl mr-2">📅</span> ULID
+					</h2>
+					<p class="text-base-content/70">
+						Universally Unique Lexicographically Sortable
+						Identifier. Sortable by time.
+					</p>
+					<div class="card-actions justify-end mt-4">
+						<span
+							class="btn btn-info btn-sm btn-outline group-hover:btn-active"
+							>Generate ULID &rarr;</span
+						>
+					</div>
+				</div>
+			</a>
+
+			{/* Password Card */}
+			<a
+				href="/password"
+				class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-base-300 group"
+			>
+				<div class="card-body">
+					<h2
+						class="card-title text-2xl text-success group-hover:text-success-content transition-colors"
+					>
+						<span class="text-3xl mr-2">🔑</span> Password
+					</h2>
+					<p class="text-base-content/70">
+						Strong, secure password generator with customizable
+						length and characters.
+					</p>
+					<div class="card-actions justify-end mt-4">
+						<span
+							class="btn btn-success btn-sm btn-outline group-hover:btn-active"
+							>Generate Password &rarr;</span
+						>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="mt-20 text-center text-base-content/50 pb-8">
+			<p>Designed for developers, by developers.</p>
+		</div>
+	</main>
 </Layout>
