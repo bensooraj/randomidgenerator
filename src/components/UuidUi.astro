@@ -4,15 +4,152 @@
 
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Header -->
-    <div class="text-center mb-12">
+    <div class="text-center mb-8">
         <h1
             class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-primary to-secondary"
         >
             Random UUID Generator
         </h1>
         <p class="text-base-content/70">
-            Generate version-4 UUIDs instantly. Free, fast, and secure.
+            Generate standard UUIDs (v4, v5, v6, v7). Free, fast, and secure.
         </p>
+    </div>
+
+    <!-- Global Configuration -->
+    <div class="card bg-base-100 shadow-xl mb-8 border border-base-300">
+        <div class="card-body">
+            <h2 class="card-title text-xl mb-4">Configuration</h2>
+            <div class="flex flex-col gap-6">
+                <!-- Version Selection -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-bold">UUID Version</span>
+                    </label>
+                    <div class="flex flex-wrap gap-4">
+                        <label
+                            class="label cursor-pointer gap-2 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors"
+                        >
+                            <input
+                                type="radio"
+                                name="uuidVersion"
+                                value="v4"
+                                class="radio radio-primary radio-sm"
+                                checked
+                            />
+                            <span class="label-text">v4 (Random)</span>
+                        </label>
+                        <label
+                            class="label cursor-pointer gap-2 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors"
+                        >
+                            <input
+                                type="radio"
+                                name="uuidVersion"
+                                value="v6"
+                                class="radio radio-primary radio-sm"
+                            />
+                            <span class="label-text">v6 (Time-ordered)</span>
+                        </label>
+                        <label
+                            class="label cursor-pointer gap-2 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors"
+                        >
+                            <input
+                                type="radio"
+                                name="uuidVersion"
+                                value="v7"
+                                class="radio radio-primary radio-sm"
+                            />
+                            <span class="label-text">v7 (Unix Epoch)</span>
+                        </label>
+                        <label
+                            class="label cursor-pointer gap-2 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors"
+                        >
+                            <input
+                                type="radio"
+                                name="uuidVersion"
+                                value="v5"
+                                class="radio radio-primary radio-sm"
+                            />
+                            <span class="label-text">v5 (Name-based)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Global Options -->
+                <div class="form-control">
+                    <label
+                        class="label cursor-pointer justify-start gap-4 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors w-fit"
+                    >
+                        <span class="label-text">Include Hyphens</span>
+                        <input
+                            type="checkbox"
+                            id="globalHyphens"
+                            class="toggle toggle-primary toggle-sm"
+                            checked
+                        />
+                    </label>
+                </div>
+            </div>
+
+            <!-- v5 Name Input (Conditional) -->
+            <div
+                id="v5InputContainer"
+                class="hidden mt-4 pt-4 border-t border-base-200"
+            >
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text font-bold"
+                                >Name (Required for v5)</span
+                            >
+                        </div>
+                        <input
+                            type="text"
+                            id="v5Name"
+                            placeholder="Enter a name"
+                            class="input input-bordered w-full"
+                            value="https://randgen.space/"
+                        />
+                        <div class="label">
+                            <span class="label-text-alt"
+                                >Name can be anything. The same namespace with
+                                the same name will always produce the same UUID.</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <div class="label">
+                            <span class="label-text font-bold">Namespace</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <label
+                                class="label cursor-pointer gap-2 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors"
+                            >
+                                <input
+                                    type="radio"
+                                    name="v5Namespace"
+                                    value="url"
+                                    class="radio radio-primary radio-sm"
+                                    checked
+                                />
+                                <span class="label-text">URL</span>
+                            </label>
+                            <label
+                                class="label cursor-pointer gap-2 border border-base-300 rounded-lg px-3 py-2 hover:bg-base-200 transition-colors"
+                            >
+                                <input
+                                    type="radio"
+                                    name="v5Namespace"
+                                    value="dns"
+                                    class="radio radio-primary radio-sm"
+                                />
+                                <span class="label-text">DNS</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Single UUID Generator Card -->
@@ -74,24 +211,13 @@
             </div>
 
             <div
-                class="flex flex-col sm:flex-row justify-between items-center gap-4"
+                class="flex flex-col sm:flex-row justify-end items-center gap-4"
             >
-                <div class="form-control">
-                    <label class="label cursor-pointer gap-2">
-                        <input
-                            type="checkbox"
-                            id="includeHyphens"
-                            class="toggle toggle-primary"
-                            checked
-                        />
-                        <span class="label-text">Include Hyphens</span>
-                    </label>
-                </div>
                 <button
                     id="generateBtn"
                     class="btn btn-primary w-full sm:w-auto min-w-[200px]"
                 >
-                    Generate
+                    Generate UUID
                 </button>
             </div>
         </div>
@@ -105,7 +231,7 @@
                 <span class="badge badge-secondary">Batch Mode</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 mb-6 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 mb-6 gap-4">
                 <div class="form-control">
                     <input
                         type="number"
@@ -120,22 +246,11 @@
                     </label>
                 </div>
                 <div class="form-control justify-end">
-                    <label class="label cursor-pointer gap-2">
-                        <input
-                            type="checkbox"
-                            id="bulkIncludeHyphens"
-                            class="toggle toggle-primary"
-                            checked
-                        />
-                        <span class="label-text">Include Hyphens</span>
-                    </label>
-                </div>
-                <div class="form-control justify-end">
                     <button
                         id="generateBulkBtn"
                         class="btn btn-primary w-full min-w-[200px]"
                     >
-                        Generate
+                        Generate Batch
                     </button>
                 </div>
             </div>
@@ -210,36 +325,37 @@
 </div>
 
 <script>
-    // Logic from uuid-generator.js adapted for Astro/DaisyUI
+    import { v4, v5, v6, v7 } from "uuid";
 
-    function generateUUID(includeHyphens = true) {
-        const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-            /[xy]/g,
-            function (c) {
-                const r = (Math.random() * 16) | 0;
-                const v = c === "x" ? r : (r & 0x3) | 0x8;
-                return v.toString(16);
-            },
-        );
-        return includeHyphens ? uuid : uuid.replace(/-/g, "");
-    }
+    // Constants
+    const NAMESPACE_URL = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
 
     // DOM Elements
     const singleUuidEl = document.getElementById("singleUuid");
     const generateBtn = document.getElementById("generateBtn");
     const regenerateBtn = document.getElementById("regenerateBtn");
     const copySingleBtn = document.getElementById("copySingleBtn");
-    const includeHyphensCheckbox = document.getElementById(
-        "includeHyphens",
-    ) as HTMLInputElement;
 
+    // Global Config Elements
+    const globalHyphensCheckbox = document.getElementById(
+        "globalHyphens",
+    ) as HTMLInputElement;
+    const versionInputs = document.querySelectorAll(
+        'input[name="uuidVersion"]',
+    );
+    const v5InputContainer = document.getElementById("v5InputContainer");
+    const v5NameInput = document.getElementById("v5Name") as HTMLInputElement;
+    const v5NamespaceInputs = document.querySelectorAll(
+        'input[name="v5Namespace"]',
+    );
+
+    // Bulk Elements
     const bulkCountInput = document.getElementById(
         "bulkCount",
     ) as HTMLInputElement;
-    const bulkIncludeHyphensCheckbox = document.getElementById(
-        "bulkIncludeHyphens",
-    ) as HTMLInputElement;
-    const generateBulkBtn = document.getElementById("generateBulkBtn");
+    const generateBulkBtn = document.getElementById(
+        "generateBulkBtn",
+    ) as HTMLButtonElement;
     const bulkOutput = document.getElementById("bulkOutput");
     const copyBulkBtn = document.getElementById("copyBulkBtn");
     const downloadBulkBtn = document.getElementById("downloadBulkBtn");
@@ -247,16 +363,104 @@
 
     let bulkUuids: string[] = [];
 
+    // Helper: Get current config
+    function getConfig() {
+        const selectedVersion =
+            (
+                document.querySelector(
+                    'input[name="uuidVersion"]:checked',
+                ) as HTMLInputElement
+            )?.value || "v4";
+        const selectedNamespace =
+            (
+                document.querySelector(
+                    'input[name="v5Namespace"]:checked',
+                ) as HTMLInputElement
+            )?.value || "url";
+        const includeHyphens = globalHyphensCheckbox?.checked ?? true;
+        const v5Name = v5NameInput?.value || "https://randgen.space/";
+        return {
+            version: selectedVersion,
+            includeHyphens,
+            v5Name,
+            namespace: selectedNamespace,
+        };
+    }
+
+    // Logic: Version Visibility
+    function updateVersionUI() {
+        const { version } = getConfig();
+        if (version === "v5") {
+            v5InputContainer?.classList.remove("hidden");
+            // Disable bulk for v5
+            if (generateBulkBtn) generateBulkBtn.disabled = true;
+            if (bulkCountInput) bulkCountInput.disabled = true;
+            if (generateBulkBtn) generateBulkBtn.textContent = "N/A for v5";
+        } else {
+            v5InputContainer?.classList.add("hidden");
+            // Enable bulk
+            if (generateBulkBtn) generateBulkBtn.disabled = false;
+            if (bulkCountInput) bulkCountInput.disabled = false;
+            if (generateBulkBtn) generateBulkBtn.textContent = "Generate Batch";
+        }
+        updateSingleUUID(); // Auto-update single UUID
+    }
+
+    // Event Listeners for Config
+    versionInputs.forEach((input) => {
+        input.addEventListener("change", updateVersionUI);
+    });
+    // Type assertion for namespace inputs to fix TS error
+    v5NamespaceInputs.forEach((input) => {
+        input.addEventListener("change", updateSingleUUID);
+    });
+    globalHyphensCheckbox?.addEventListener("change", updateSingleUUID);
+    v5NameInput?.addEventListener("input", updateSingleUUID); // Update v5 as you type
+
+    // Generator Core
+    function createUUID(
+        version: any,
+        name: string | Uint8Array<ArrayBufferLike>,
+        namespaceType: string = "url",
+    ) {
+        try {
+            switch (version) {
+                case "v4":
+                    return v4();
+                case "v5":
+                    const namespace = namespaceType === "dns" ? v5.DNS : v5.URL;
+                    return v5(name, namespace);
+                case "v6":
+                    return v6();
+                case "v7":
+                    return v7();
+                default:
+                    return v4();
+            }
+        } catch (e) {
+            console.error("UUID Generation Error:", e);
+            return "Error";
+        }
+    }
+
+    function generateFormattedUUID() {
+        const { version, includeHyphens, v5Name, namespace } = getConfig();
+        const rawUuid = createUUID(version, v5Name, namespace);
+        return includeHyphens ? rawUuid : rawUuid.replace(/-/g, "");
+    }
+
     // Single UUID Logic
     function updateSingleUUID() {
-        if (!singleUuidEl || !includeHyphensCheckbox) return;
+        if (!singleUuidEl) return;
+
+        // Add a small animation effect
         singleUuidEl.classList.add("opacity-50");
+
+        // Small delay to allow UI to feel responsive
         setTimeout(() => {
-            singleUuidEl.textContent = generateUUID(
-                includeHyphensCheckbox.checked,
-            );
+            singleUuidEl.textContent = generateFormattedUUID();
             singleUuidEl.classList.remove("opacity-50");
-        }, 150);
+        }, 50);
     }
 
     generateBtn?.addEventListener("click", updateSingleUUID);
@@ -268,26 +472,20 @@
             copyToClipboard(text);
             showToast("UUID copied to clipboard!");
         } else {
-            updateSingleUUID(); // Auto generate if empty/fresh
+            updateSingleUUID();
             setTimeout(() => {
                 const newText = singleUuidEl?.textContent?.trim();
                 if (newText) {
                     copyToClipboard(newText);
                     showToast("Generated & Copied!");
                 }
-            }, 200);
+            }, 100);
         }
     });
 
     // Bulk UUID Logic
     function generateBulk() {
-        if (
-            !bulkCountInput ||
-            !bulkIncludeHyphensCheckbox ||
-            !bulkOutput ||
-            !uuidCounter
-        )
-            return;
+        if (!bulkCountInput || !bulkOutput || !uuidCounter) return;
 
         let count = Math.min(
             Math.max(parseInt(bulkCountInput.value) || 10, 1),
@@ -297,7 +495,7 @@
 
         bulkUuids = [];
         for (let i = 0; i < count; i++) {
-            bulkUuids.push(generateUUID(bulkIncludeHyphensCheckbox.checked));
+            bulkUuids.push(generateFormattedUUID());
         }
 
         bulkOutput.innerHTML = bulkUuids.join("<br>");
@@ -351,7 +549,7 @@
         }
     }
 
-    function showToast(message: string) {
+    function showToast(message: string | null) {
         const toast = document.getElementById("toast");
         const toastMessage = document.getElementById("toastMessage");
         if (toast && toastMessage) {
@@ -361,16 +559,13 @@
         }
     }
 
+    // Validation for bulk input
+    bulkCountInput?.addEventListener("input", function () {
+        let value = parseInt(this.value);
+        if (value > 100) this.value = "100";
+        if (value < 1 && this.value !== "") this.value = "1";
+    });
+
     // Initial load
     updateSingleUUID();
-
-    // Validation for bulk input
-    bulkCountInput?.addEventListener(
-        "input",
-        function (this: HTMLInputElement) {
-            let value = parseInt(this.value);
-            if (value > 100) this.value = "100";
-            if (value < 1 && this.value !== "") this.value = "1";
-        },
-    );
 </script>
