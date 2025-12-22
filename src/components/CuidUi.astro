@@ -1,5 +1,5 @@
 ---
-
+import { Code } from "astro:components";
 ---
 
 <div class="container mx-auto px-4 py-8 max-w-4xl">
@@ -204,6 +204,107 @@
                 class="text-xs text-base-content/50 mt-2 text-right"
                 id="cuidCounter"
             >
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="card bg-base-100 shadow-xl border border-base-300 mt-8">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-4">About CUID2 Generator</h2>
+            <div class="prose max-w-none">
+                <p>
+                    <strong>CUID2</strong> is a modern identifier format built for
+                    <strong>horizontal scaling</strong>, security, and practical
+                    performance. The CUID2 design aims to be collision-resistant
+                    at scale and hard to guess, helping reduce risks like
+                    enumeration attacks when IDs are exposed publicly (e.g., in
+                    URLs).
+                </p>
+
+                <h3 class="text-lg font-bold mt-4 mb-2">
+                    Why developers pick CUID2
+                </h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>
+                        <strong>Designed for distributed generation:</strong> Multiple
+                        machines can create IDs without coordination.
+                    </li>
+                    <li>
+                        <strong>URL- and name-friendly:</strong> Base36 output (lowercase
+                        letters + digits) with no special characters.
+                    </li>
+                    <li>
+                        <strong>Configurable:</strong> You can tune output length,
+                        fingerprinting, and randomness sources for your environment.
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold mt-6 mb-2">
+                    JavaScript / TypeScript examples
+                </h3>
+
+                <p class="mb-2"><strong>Default generator:</strong></p>
+                <Code
+                    code={`import { createId } from "@paralleldrive/cuid2";
+import { isCuid } from "@paralleldrive/cuid2";
+
+const id: string = createId();
+console.log(id, isCuid(id)); // true/false`}
+                    lang="ts"
+                    theme="dark-plus"
+                />
+
+                <p class="mb-2">
+                    <strong
+                        >Custom configuration (length / fingerprint / RNG):</strong
+                    >
+                </p>
+                <Code
+                    code={`import { init } from "@paralleldrive/cuid2";
+
+const createShortId = init({
+  length: 10,
+  fingerprint: "my-service-node-1",
+  random: Math.random, 
+});
+
+console.log(createShortId());`}
+                    lang="ts"
+                    theme="dark-plus"
+                />
+
+                <h3 class="text-lg font-bold mt-4 mb-2">
+                    When CUID2 is a strong default
+                </h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>
+                        <strong>Public-facing identifiers</strong> where guessing
+                        IDs should be difficult
+                    </li>
+                    <li>
+                        <strong>Multi-tenant systems</strong> where enumeration could
+                        leak data
+                    </li>
+                    <li>
+                        <strong
+                            >Apps spanning browser + Node + containers</strong
+                        > that want consistent ID generation rules
+                    </li>
+                </ul>
+
+                <hr class="my-6 border-base-200" />
+
+                <p class="text-sm text-base-content/70">
+                    Need a secure <strong>random number generator</strong> or <strong
+                        >random generator</strong
+                    > for apps? This <strong>CUID2</strong> tool acts as a secure
+                    <strong>random object generator</strong>, leveraging entropy
+                    sources to create collision-resistant IDs. It's an upgrade
+                    over a simple <strong>google random number generator</strong
+                    >
+                    or generic <strong>random nr</strong> output for distributed systems.
+                </p>
             </div>
         </div>
     </div>

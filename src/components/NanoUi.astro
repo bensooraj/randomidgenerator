@@ -1,5 +1,5 @@
 ---
-
+import { Code } from "astro:components";
 ---
 
 <div class="container mx-auto px-4 py-8 max-w-4xl">
@@ -209,6 +209,112 @@
                 class="text-xs text-base-content/50 mt-2 text-right"
                 id="nanoidCounter"
             >
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="card bg-base-100 shadow-xl border border-base-300 mt-8">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-4">About NanoID Generator</h2>
+            <div class="prose max-w-none">
+                <p>
+                    If your priority is <strong>short IDs</strong> that are easy to
+                    paste into URLs and logs but still offer strong collision resistance,
+                    <strong>NanoID</strong> is a great fit. NanoID is designed for
+                    JavaScript and produces <strong>URL-friendly IDs</strong> using
+                    a safe alphabet like <code>A-Za-z0-9_-</code>, which packs
+                    lots of randomness into fewer characters.
+                </p>
+
+                <h3 class="text-lg font-bold mt-4 mb-2">
+                    Why NanoID is popular
+                </h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>
+                        <strong>Short by default:</strong> NanoID’s default length
+                        is <strong>21 characters</strong>, chosen to reach
+                        collision resistance comparable to UUID v4 while being
+                        much shorter.
+                    </li>
+                    <li>
+                        <strong>Strong randomness:</strong> It uses Node’s <code
+                            >crypto</code
+                        > and the browser <strong>Web Crypto API</strong>,
+                        avoiding <code>Math.random()</code> for secure usage.
+                    </li>
+                    <li>
+                        <strong>Customizable:</strong> You can tune <strong
+                            >length</strong
+                        >, and even define a <strong>custom alphabet</strong> to match
+                        your product’s constraints (e.g., lowercase-only slugs, hex
+                        IDs, no ambiguous characters).
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold mt-6 mb-2">
+                    JavaScript / TypeScript examples
+                </h3>
+
+                <p class="mb-2"><strong>Basic usage:</strong></p>
+                <Code
+                    code={`import { nanoid } from "nanoid";
+
+const id: string = nanoid();      // e.g. "V1StGXR8_Z5jdHi6B-myT"
+const short: string = nanoid(10); // shorter => higher collision risk
+
+console.log({ id, short });`}
+                    lang="ts"
+                    theme="dark-plus"
+                />
+
+                <p class="mb-2">
+                    <strong
+                        >Custom alphabet + size (great for “slug IDs”):</strong>
+                </p>
+                <Code
+                    code={`import { customAlphabet } from "nanoid";
+
+// hex-ish IDs, 10 chars
+const makeHexId = customAlphabet("1234567890abcdef", 10);
+
+const orderId: string = makeHexId(); // e.g. "4f90d13a42"
+console.log(orderId);`}
+                    lang="ts"
+                    theme="dark-plus"
+                />
+
+                <h3 class="text-lg font-bold mt-4 mb-2">
+                    When NanoID is the best choice
+                </h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>
+                        <strong>Public URLs</strong> (invite links, short resources,
+                        share links)
+                    </li>
+                    <li>
+                        <strong>Client-generated IDs</strong> (optimistic UI, offline
+                        drafts)
+                    </li>
+                    <li>
+                        <strong>Distributed systems</strong> where shortness matters
+                        (logs, analytics events)
+                    </li>
+                </ul>
+
+                <hr class="my-6 border-base-200" />
+
+                <p class="text-sm text-base-content/70">
+                    Need a compact <strong>random number generator</strong> or <strong
+                        >random generator</strong
+                    > for URLs? This <strong>NanoID</strong> tool serves as a configurable
+                    <strong>random object generator</strong>, creating URL-safe,
+                    unique strings. It beats a generic <strong
+                        >google random number generator</strong
+                    >
+                    or <strong>random nr</strong> tool by offering cryptographically
+                    strong, collision-resistant identifiers customizable to your needs.
+                </p>
             </div>
         </div>
     </div>

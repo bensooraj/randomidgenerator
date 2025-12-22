@@ -1,5 +1,5 @@
 ---
-
+import { Code } from "astro:components";
 ---
 
 <div class="container mx-auto px-4 py-8 max-w-4xl">
@@ -309,6 +309,121 @@
                 class="text-xs text-base-content/50 mt-2 text-right"
                 id="uuidCounter"
             >
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="card bg-base-100 shadow-xl border border-base-300 mt-8">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-4">
+                About UUID Generator (RFC 9562)
+            </h2>
+            <div class="prose max-w-none">
+                <p>
+                    If you need a globally unique identifier for databases,
+                    APIs, events, or distributed systems,
+                    <strong>UUIDs</strong> are still the default choice. A UUID is
+                    a <strong>128-bit value (16 octets)</strong>
+                    with standardized text representations and well-defined versioning
+                    rules. The current IETF/RFC Editor standard describing UUID formats
+                    and versions is <strong>RFC 9562</strong>.
+                </p>
+
+                <h3 class="text-lg font-bold mt-4 mb-2">
+                    Which UUID version should you use?
+                </h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>
+                        <strong>UUID v4 (random)</strong>: Great for general
+                        uniqueness when you don’t care about chronological
+                        ordering.
+                    </li>
+                    <li>
+                        <strong>UUID v7 (time-ordered)</strong>: Ideal when you
+                        want UUIDs that <em>generally sort by creation time</em> (helpful
+                        for database indexes, event streams, and logs). RFC 9562 defines
+                        v7 as a Unix timestamp in milliseconds plus randomness.
+                    </li>
+                    <li>
+                        <strong>UUID v5 (name-based, deterministic)</strong>:
+                        Useful when the same input should always produce the
+                        same UUID (idempotency, stable IDs from names/slugs),
+                        via a namespace + name.
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold mt-6 mb-2">
+                    JavaScript / TypeScript examples
+                </h3>
+                <p class="mb-2">
+                    Using the popular <code>uuid</code> NPM package:
+                </p>
+                <Code
+                    code={`import { v4 as uuidv4, v5 as uuidv5, v7 as uuidv7 } from "uuid";
+
+// v4: random UUID
+const idV4: string = uuidv4();
+
+// v7: time-ordered UUID
+const idV7: string = uuidv7();
+
+// v5: deterministic UUID from (name + namespace)
+const DNS_NAMESPACE = uuidv5.DNS;
+const userSlug = "ben@example.com";
+const stableId: string = uuidv5(userSlug, DNS_NAMESPACE);
+
+console.log({ idV4, idV7, stableId });`}
+                    lang="ts"
+                    theme="dark-plus"
+                />
+
+                <p class="mb-2">
+                    <strong>Browser-native option (Web Crypto):</strong>
+                </p>
+                <Code
+                    code={`const id = crypto.randomUUID();`}
+                    lang="ts"
+                    theme="dark-plus"
+                />
+
+                <h3 class="text-lg font-bold mt-4 mb-2">
+                    Practical tips developers care about
+                </h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>
+                        <strong>Need sortable IDs?</strong> Prefer <strong
+                            >UUID v7</strong
+                        > over v4 for better locality (newer values tend to cluster),
+                        which can reduce index fragmentation in many databases.
+                    </li>
+                    <li>
+                        <strong>Need stable IDs from names?</strong> Use <strong
+                            >v5</strong
+                        > so the same (namespace + name) always maps to the same UUID.
+                    </li>
+                    <li>
+                        <strong>Security note:</strong> UUIDs are identifiers, not
+                        secrets. Don’t treat them like access tokens. If exposing
+                        UUIDs publicly, enforce authorization checks on the server.
+                    </li>
+                </ul>
+
+                <hr class="my-6 border-base-200" />
+
+                <p class="text-sm text-base-content/70">
+                    Looking for a reliable <strong
+                        >random number generator</strong
+                    > or <strong>UUID generator</strong>? Our tool creates
+                    standard <strong>UUIDs</strong>, functioning as a robust <strong
+                        >random generator</strong
+                    >
+                    and <strong>random object generator</strong> for your applications.
+                    It provides a structured alternative to a basic
+                    <strong>google random number generator</strong> or generic <strong
+                        >random nr</strong
+                    > tools when you need statistically unique identifiers.
+                </p>
             </div>
         </div>
     </div>
